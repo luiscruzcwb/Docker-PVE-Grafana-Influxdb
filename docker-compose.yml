@@ -1,0 +1,32 @@
+version: '2'
+services:
+  influxdb:
+    image: influxdb:latest
+    ports:
+      - '8086:8086'
+      - "8089:8089/udp"
+    volumes:
+      - influxdb-storage:/var/lib/influxdb
+    environment:
+      - INFLUXDB_DB=pve
+      - INFLUXDB_ADMIN_USER=${INFLUXDB_USERNAME}
+      - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_PASSWORD}
+      - INFLUXDB_UDP_ENABLED=true
+      - INFLUXDB_UDP_DATABASE=proxmox
+      - INFLUXDB_UDP_0_BATCH_SIZE=1000
+      - INFLUXDB_UDP_0_BATCH_PENDING=10
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./grafana-provisioning/:/etc/grafana/provisioning
+    depends_on:
+      - influxdb
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+volumes:
+  influxdb-volume:
+  grafana-volume:

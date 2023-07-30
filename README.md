@@ -24,7 +24,7 @@ Caso seja necessário, faça os ajustes no **docker-compose.yml** e no **.env**.
 
 Acessando o Grafana:  http://ip-host:3000, a conexão com o InfluxDB já estará configurada conforme dados fornecidos no **datasource.yml** do **Grafana**. 
 
-![Grafana Datasources](grafana_datasources.png)]
+![Grafana Datasources](grafana_datasources.png)
 
 
 ## Influxdb 
